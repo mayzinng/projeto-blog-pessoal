@@ -15,8 +15,6 @@ export default function SignUp() {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
 
-    const [user, setUser] = useState({});
-
     const handleChange = (e: any) => {
         e.preventDefault();
         if (e.target.name === 'name') { 
@@ -32,31 +30,17 @@ export default function SignUp() {
 
     }
 
-        const api = axios.create({
-            baseURL: "http://localhost:3001"
-        })
-
-
-      
-
-    const handleSubmitData = async () => {
-        await api.post('/users', {
-            user: {
+    const handleSubmit = () => {
+        axios.post("http://localhost:3001/", {
             name: name,
             email: email,
             username: username,
-            password: password 
-            }
+            password: password
+        }).then((response) => {
+            console.log(response)
         })
-        .then((response)=> {setUser(response.data); 
-            console.log(user); 
-            console.log(response.data);})
-        .catch((error)=> console.log(error));
     }
-    useEffect(()=> {
-        handleSubmitData()
-    }, []);
-    
+      
 
 
    
@@ -89,7 +73,7 @@ export default function SignUp() {
                         onChange={handleChange}
                         ></input>
                         
-                        <button type="submit" onClick={handleSubmitData}>Submit</button>
+                        <button type="submit" onClick={handleSubmit}>Submit</button>
                     </form>
                 </div>
             </Container>

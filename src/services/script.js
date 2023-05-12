@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const mysql = require('mysql2/promise')
 
+
 app.use(cors());
 app.use(bodyParser.json())
 app.use(express.json())
@@ -31,33 +32,35 @@ const allItems = async () => {
     return query;
 }
 
+// const postUser = async (user_name, email, pass, nickname) => {
+
+//     const [query] = await conecction.execute("INSERT INTO tb_users ( user_name, email, user_password, nickname ) VALUES ( `${user_name}, ${email}, ${pass}, ${nickname}` )");
+
+//     return query;
+// }
+
 module.exports = allItems;
 
 app.get('/', async (req, res)=> {
     const query = await allItems();
-    return res.status(201).json(query);
+    return res.status(200).json(query);
 })
 
+app.post('/', async (req, res) => {
+    const {name} = req.body;
+    const {email} = req.body;
+    const {password} = req.body;
+    const {username} = req.body;
 
+    // const query = await postUser(name, email, password, nickname);
 
+    let sql = "INSERT INTO tb_users ( user_name, email, user_password, nickname ) VALUES ( ?, ?, ?, ?)"
 
-// app.post('/users',(req, res)=> {
-//     const {user} = req.body;
+    conecction.query(sql, [name, email, password, username], (err, result)=> {
+        console.log(err)
+    })
 
+    return res.status(201);
+})
 
-//     if(!{user}) {
-//         res.status(400).send({message: 'error server'})
-//     } 
-
-//     res.status(200).send(user)
-//     console.log({user})
-
-// })
-
-// app.get('/users',(req, res)=> {
-//     // const {username} = req.params;
-//     const {user} = req.body
-//     // console.log(user)
-//      return res.status(200).json({user})
-// })
 
