@@ -24,7 +24,6 @@ const conecction = mysql.createPool({
     database: 'db_users'
 });
 
-module.exports = conecction;
 
 const allItems = async () => {
     const [query] = await conecction.execute('SELECT * FROM db_users.tb_users');
@@ -32,14 +31,6 @@ const allItems = async () => {
     return query;
 }
 
-// const postUser = async (user_name, email, pass, nickname) => {
-
-//     const [query] = await conecction.execute("INSERT INTO tb_users ( user_name, email, user_password, nickname ) VALUES ( `${user_name}, ${email}, ${pass}, ${nickname}` )");
-
-//     return query;
-// }
-
-module.exports = allItems;
 
 app.get('/', async (req, res)=> {
     const query = await allItems();
@@ -52,8 +43,6 @@ app.post('/', async (req, res) => {
     const {password} = req.body;
     const {username} = req.body;
 
-    // const query = await postUser(name, email, password, nickname);
-
     let sql = "INSERT INTO tb_users ( user_name, email, user_password, nickname ) VALUES ( ?, ?, ?, ?)"
 
     conecction.query(sql, [name, email, password, username], (err, result)=> {
@@ -64,3 +53,22 @@ app.post('/', async (req, res) => {
 })
 
 
+app.get('/posts', async (req, res)=> {
+    const [query] = await conecction.execute('SELECT * FROM db_users.tb_posts');
+
+    return res.status(200).json(query)
+})
+
+app.post('/posts', async(req, res) => {
+    const {name} = req.body;
+    const {username} = req.body;
+    const {post} = req.body;
+    
+    let sql = "INSERT INTO tb_posts ( nickname, text_post ) VALUES ( ?, ? )"
+
+    conecction.query(sql, ["BENJAMIN", post], (err, result)=> {
+        console.log(err)
+    })
+
+    return res.status(201);
+})

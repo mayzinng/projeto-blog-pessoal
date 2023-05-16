@@ -4,9 +4,35 @@ import Logo from '../assets/logo.svg';
 import notification from '../assets/notificationIcon.svg';
 import perfil from '../assets/perfil.svg'
 import Image from "next/image";
+import { useState } from "react";
+import axios from "axios";
 
 
 export default function Home() {
+
+    const [post, setPost] = useState('');
+
+    const handleChange = (e: any) => {
+        setPost(e.target.value);
+
+        console.log(e.target.value.toString());
+
+        const posts = e.target.value.toString();
+        console.log(posts.length);
+
+    }
+
+    const handleSubmit = () => {
+        axios.post("http://localhost:3001/posts", {
+            post: post
+        }).then((response) => {
+            console.log(response)
+        }).catch((err) => {
+            console.log(err)
+        })
+
+    }
+
     return(
         <MainContainer>
             <Header>
@@ -25,8 +51,8 @@ export default function Home() {
 
             <SectionPosts>
                 <div>
-                    <textarea placeholder="Share something..."></textarea>
-                    <button type="submit">post</button>
+                    <textarea placeholder="Share something..." value={post} onChange={handleChange}></textarea>
+                    <button type="submit" onClick={handleSubmit}>post</button>
                 </div>
 
                 <div>

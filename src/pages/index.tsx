@@ -3,6 +3,7 @@ import {Container, MainContainer} from '../styles/pages/index'
 import Head from 'next/head'
 
 import Logo from '../assets/logo.svg'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -32,12 +33,16 @@ export default function Home() {
         <div>
           <h1>New user?</h1>
           <h3>Click here to sign up.</h3>
-          <button>go</button>
+          <Link href="/signUp">
+            <button>go</button>
+          </Link>
         </div>
         <div>
           <h1>Not a new user?</h1>
           <h3>Sign in now.</h3>
-          <button>sign in</button>
+          <Link href="/signIn">
+            <button>sign in</button>
+          </Link>
         </div>
       </Container>
       

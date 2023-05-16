@@ -72,7 +72,7 @@ export const SectionPosts = styled('section', {
             border: '2px solid #679850',
             outline: '0',
 
-            padding: '0.5rem',
+            padding: '1rem',
             width: '40rem',
             height: '10rem',
 
