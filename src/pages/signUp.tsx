@@ -38,7 +38,20 @@ export default function SignUp() {
             password: password
         }).then((response) => {
             console.log(response)
-        })
+        });
+
+        const user = {
+            name: name,
+            email: email,
+            username: username,
+        }
+
+        const setUser = localStorage.setItem('user', JSON.stringify(user));
+        const getUser = localStorage.getItem('user');
+        console.log(getUser);
+
+        const convertUser = JSON.parse(getUser);
+        console.log(convertUser.name);
     }
       
 
